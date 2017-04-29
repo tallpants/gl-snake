@@ -1,4 +1,4 @@
-cmake_minimum_required(2.8.0)
+cmake_minimum_required(VERSION 2.8.0)
 project(gl_snake)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "./bin")
