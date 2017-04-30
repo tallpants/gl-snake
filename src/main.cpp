@@ -38,6 +38,7 @@ bool food_available = false;
 int food_coords[2];
 
 // TODO: Document these variables
+// TODO: Do we really need both?
 int growth_stage = 0;
 int growth = 2;
 
