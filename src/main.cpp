@@ -1,4 +1,5 @@
 #include <deque>
+#include <vector>
 #include <GL/glut.h>
 #include <stdlib.h>
 
@@ -25,8 +26,8 @@ bool moved = false;
 // Coordinates of the snake's body
 // part_coords[i][0] => X coordinate of the i'th part of the snake's body
 // part_coords[i][1] => Y coordinate of the i'th part of the snake's body
-// TODO: Do we really need a queue of queues? Can we use queue of array[2] instead?
-std::deque< std::deque<int> > part_coords;
+// Could have used std::array instead of vector but it requires the C++11 standard
+std::deque< std::vector<int> > part_coords;
 
 // Initial size of the snake (number of blocks)
 int initial_size = 3;
@@ -142,7 +143,7 @@ void moveSnake(int new_direction) {
   int last_part = part_coords.size() - 1;
 
   // The new head of the snake after this iteration
-  std::deque<int> new_head = part_coords[last_part];
+  std::vector<int> new_head = part_coords[last_part];
 
   // Did the snake go up?
   if (direction == UP) {
@@ -356,7 +357,7 @@ int main(int argc, char **argv) {
   glutTimerFunc(move_speed, moveSnakeAuto, 0);
 
   for (int i = 1; i <= initial_size; i++) {
-    std::deque<int> row;
+    std::vector<int> row;
 
     row.push_back(0);
     row.push_back((map_half_length + 2 + (initial_size * 2)) - (i * 2));
