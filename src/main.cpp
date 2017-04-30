@@ -25,6 +25,7 @@ bool moved = false;
 // Coordinates of the snake's body
 // part_coords[i][0] => X coordinate of the i'th part of the snake's body
 // part_coords[i][1] => Y coordinate of the i'th part of the snake's body
+// TODO: Do we really need a queue of queues? Can we use queue of array[2] instead?
 std::deque< std::deque<int> > part_coords;
 
 // Initial size of the snake (number of blocks)
