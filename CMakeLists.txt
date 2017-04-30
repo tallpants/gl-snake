@@ -3,7 +3,7 @@ project(gl_snake)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "./bin")
 
-add_executable(snake src/snake.cpp)
+add_executable(snake src/main.cpp)
 
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
