@@ -38,6 +38,7 @@ bool food_available = false;
 // Coordinates of the food on the map
 int food_coords[2];
 
+// Is the snake growing this iteration?
 bool growth_stage = false;
 
 /**
