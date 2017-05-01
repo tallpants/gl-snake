@@ -38,10 +38,7 @@ bool food_available = false;
 // Coordinates of the food on the map
 int food_coords[2];
 
-// TODO: Document these variables
-// TODO: Do we really need both?
-int growth_stage = 0;
-int growth = 2;
+bool growth_stage = false;
 
 /**
  * Return a random coordinate within the bounds of the map
@@ -259,12 +256,14 @@ void moveSnake(int new_direction) {
   // Pop the last block if the snake didn't grow to "move" the snake
   if (!growth_stage) {
     part_coords.pop_back();
-  } else if (growth_stage == growth) {
-    growth_stage = 0;
-  } else {
-    growth_stage++;
   }
 
+  // If the snake did grow, don't pop the last block so the snake "grows"
+  // and then set growth_stage to false so it doesn't keep growing again in the
+  // next iteration.
+  else {
+    growth_stage = false;
+  }
   // Marks the current window as needing to be redisplayed in the next
   // iteration of glutMainLoop.
   glutPostRedisplay();
