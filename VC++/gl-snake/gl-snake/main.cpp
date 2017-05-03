@@ -46,6 +46,12 @@ public:
 		}
 	}
 
+	void pop_back() {
+		tail = tail->prev;
+		tail->next = nullptr;
+		size--;
+	}
+
 	coordinate operator[] (int index) {
 		if (index == 0) {
 			coordinate c = { head->data.x, head->data.y };
@@ -74,7 +80,16 @@ void main() {
 	s.push_front(b);
 	s.push_front(c);
 
-	std::cout << s[1].x << " " << s[1].y << std::endl;
+	for (int i = 0; i < s.size; i++) {
+		std::cout << s[i].x << " " << s[i].y << std::endl;
+	}
 	
+	std::cout << "Popping once" << std::endl << std::endl;
+	s.pop_back();
+
+	for (int i = 0; i < s.size; i++) {
+		std::cout << s[i].x << " " << s[i].y << std::endl;
+	}
+
 	std::cin.get();
 }
