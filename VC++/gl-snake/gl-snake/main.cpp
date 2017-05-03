@@ -32,7 +32,7 @@ public:
 			head->next = nullptr;
 			head->prev = nullptr;
 			tail = head;
-			size += 1;
+			size++;
 		}
 		else {
 			node* temp = new node;
@@ -42,7 +42,7 @@ public:
 			temp->prev = nullptr;
 			head->prev = temp;
 			head = temp;
-			size += 1;
+			size++;
 		}
 	}
 
@@ -62,7 +62,7 @@ public:
 		node* temp = head;
 		while (i != index) {
 			temp = temp->next;
-			i += 1;
+			i++;
 		}
 
 		coordinate c = { temp->data.x, temp->data.y };
