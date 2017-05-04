@@ -101,7 +101,8 @@ bool seedflag = false;
 bool food = false;
 bool game_over = false;
 int direction = RIGHT;
-int foodx, foody;
+coordinate food_coords;
+Snake snake;
 int posx[1000] = { 4, 3, 2, 1, 0, -1, -1 };
 int posy[1000] = { 10, 10, 10, 10, 10, 10, 10 };
 int length = 7;
@@ -201,7 +202,7 @@ void drawSnake() {
 
       if (posx[i] == 0 || posx[i] == columns - 1 || posy[i] == 0 || posy[i] == rows - 1) {
         game_over = true;
-      } else if (posx[i] == foodx && posy[i] == foody) {
+      } else if (posx[i] == food_coords.x && posy[i] == food_coords.y) {
         food = false;
         length_inc = true;
       }
@@ -228,16 +229,18 @@ void drawSnake() {
 
 void drawFood() {
   if (!food) {
-    foodx = random(2, columns - 2);
-    foody = random(2, rows - 2);
+    //foodx = random(2, columns - 2);
+    //foody = random(2, rows - 2);
+    food_coords.x = random(2, columns - 2);
+    food_coords.y = random(2, rows - 2);
     food = true;
   }
 
   glBegin(GL_QUADS);
-  glVertex2d(foodx, foody);
-  glVertex2d(foodx + 1, foody);
-  glVertex2d(foodx + 1, foody + 1);
-  glVertex2d(foodx, foody + 1);
+  glVertex2d(food_coords.x, food_coords.y);
+  glVertex2d(food_coords.x + 1, food_coords.y);
+  glVertex2d(food_coords.x + 1, food_coords.y + 1);
+  glVertex2d(food_coords.x, food_coords.y + 1);
   glEnd();
 }
 
