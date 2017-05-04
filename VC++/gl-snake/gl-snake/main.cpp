@@ -1,53 +1,75 @@
 #include <GL\glut.h>
+#include <iostream>
 
+// Movement direction macros
 #define UP 1
 #define RIGHT 2
 #define DOWN -1
 #define LEFT -2
 
+// Number of rows and columns forming the map
 int rows = 40;
-
 int columns = 40;
 
+// Will the snake grow this iteration?
 bool length_inc = false;
 
+// Is there food on the map this iteration?
 bool food = false;
 
+// Is the game over?
 bool game_over = false;
 
+// Initial movement direction for the snake
 int direction = RIGHT;
 
+// The coordinates of the food on the map
 int foodx;
 int foody;
 
+// X and Y coordinates of the blocks forming the snake's body
 int posx[1000] = { 4, 3, 2, 1, 0 };
 int posy[1000] = { 10, 10, 10, 10, 10 };
 
-int length = 7;
+// Initial length of the snake
+int length = 5;
 
+// Returns a random number between the specified range
 int random(int min, int max) {
   return min + rand() % (max - min);
 }
 
+// If there is no food on the screen, generates coordinates
+// that don't collide with the snake, sets the food variable
+// to true, and draws the food on the screen
 void drawFood() {
 
+  // Only calculate new coordinates for food if there isn't
+  // already food on the map. If there is, then just draw it
   if (!food) {
 
     bool collides = false;
 
+    // Temporary coordinates for the food
     int tempfoodx;
     int tempfoody;
 
+    // Keep generating temporary coordinates until
+    // you find one that doesn't collide with the snake
     while (true) {
       tempfoodx = random(2, columns - 2);
       tempfoody = random(2, rows - 2);
 
+      // Does any part of the snake's body have the same
+      // coordinates as the food generated?
       for (int i = 0; i < length; i++) {
         if (posx[i] == tempfoodx && posy[i] == tempfoody) {
           collides = true;
         }
       }
 
+      // If the temporary coordinates don't collide with the snake
+      // set them to be the actual food coordinates
       if (!collides) {
         foodx = tempfoodx;
         foody = tempfoody;
@@ -57,13 +79,14 @@ void drawFood() {
     }
   }
 
+  // Draw the food in red
   glColor3f(1, 0, 0);
 
   glBegin(GL_QUADS);
-    glVertex2d(foodx, foody);
-    glVertex2d(foodx + 1, foody);
-    glVertex2d(foodx + 1, foody + 1);
-    glVertex2d(foodx, foody + 1);
+  glVertex2d(foodx, foody);
+  glVertex2d(foodx + 1, foody);
+  glVertex2d(foodx + 1, foody + 1);
+  glVertex2d(foodx, foody + 1);
   glEnd();
 }
 
@@ -80,21 +103,21 @@ void drawSnake() {
 
     if (i == 0) {
       switch (direction) {
-        case UP:
-          posy[i]++;
-          break;
+      case UP:
+        posy[i]++;
+        break;
 
-        case DOWN:
-          posy[i]--;
-          break;
+      case DOWN:
+        posy[i]--;
+        break;
 
-        case RIGHT:
-          posx[i]++;
-          break;
+      case RIGHT:
+        posx[i]++;
+        break;
 
-        case LEFT:
-          posx[i]--;
-          break;
+      case LEFT:
+        posx[i]--;
+        break;
       }
 
       if (posx[i] == 0 || posx[i] == columns - 1) {
@@ -117,10 +140,10 @@ void drawSnake() {
     }
 
     glBegin(GL_QUADS);
-      glVertex2d(posx[i], posy[i]);
-      glVertex2d(posx[i] + 1, posy[i]);
-      glVertex2d(posx[i] + 1, posy[i] + 1);
-      glVertex2d(posx[i], posy[i] + 1);
+    glVertex2d(posx[i], posy[i]);
+    glVertex2d(posx[i] + 1, posy[i]);
+    glVertex2d(posx[i] + 1, posy[i] + 1);
+    glVertex2d(posx[i], posy[i] + 1);
     glEnd();
   }
 
@@ -148,25 +171,25 @@ void display_callback() {
 void input_callback(int key, int x, int y) {
 
   switch (key) {
-    case GLUT_KEY_UP:
-      if (direction != DOWN)
-        direction = UP;
-      break;
+  case GLUT_KEY_UP:
+    if (direction != DOWN)
+      direction = UP;
+    break;
 
-    case GLUT_KEY_DOWN:
-      if (direction != UP)
-        direction = DOWN;
-      break;
+  case GLUT_KEY_DOWN:
+    if (direction != UP)
+      direction = DOWN;
+    break;
 
-    case GLUT_KEY_RIGHT:
-      if (direction != LEFT)
-        direction = RIGHT;
-      break;
+  case GLUT_KEY_RIGHT:
+    if (direction != LEFT)
+      direction = RIGHT;
+    break;
 
-    case GLUT_KEY_LEFT:
-      if (direction != RIGHT)
-        direction = LEFT;
-      break;
+  case GLUT_KEY_LEFT:
+    if (direction != RIGHT)
+      direction = LEFT;
+    break;
   }
 }
 
@@ -176,30 +199,39 @@ void timer_callback(int) {
 }
 
 int main(int argc, char **argv) {
+
+  // Initialize the window and the display mode (double buffering)
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 
-  glutInitWindowPosition(10, 10);
+  // Create a 600x600 window with the title "Snake"
   glutInitWindowSize(600, 600);
   glutCreateWindow("Snake");
 
+  // Viewport to match the window's dimensions
   glViewport(0, 0, 600, 600);
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 
+  // Coordinate system of columns x rows with origin (0,0)
+  // as the bottom left corner of the window and the point
+  // (columns - 1, rows - 1) as the upper right corner.
   glOrtho(0.0, columns, 0.0, rows, -1.0, 1.0);
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
+  // Register display function and input function
   glutDisplayFunc(display_callback);
   glutSpecialFunc(input_callback);
+
+  // The main game loop will trigger every 100ms
   glutTimerFunc(100, timer_callback, 0);
 
+  // Background color
   glClearColor(1, 1, 1, 1);
 
   glutMainLoop();
-
   return 0;
 }
