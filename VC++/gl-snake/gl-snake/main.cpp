@@ -6,86 +6,6 @@
 #define DOWN -1
 #define LEFT -2
 
-// Storage container for coordinates of the blocks forming the
-// snake's body and the food blocks
-struct coordinate {
-  int x;
-  int y;
-};
-
-// Partial deque implementation that encapsulates the snake's body
-class Snake {
-  struct node {
-    coordinate data;
-    node* next;
-    node* prev;
-  };
-
-  node* head;
-  node* tail;
-
-public:
-  // Current size of the snake's body
-  int size;
-
-  // Default constructor for empty snake
-  Snake() {
-    size = 0;
-    head = NULL;
-    tail = NULL;
-  }
-
-  // Push a block onto the head of the snake
-  void push_front(coordinate c) {
-    // Is this the first block of the snake?
-    if (size == 0) {
-      head = new node;
-      head->data.x = c.x;
-      head->data.y = c.y;
-      head->next = NULL;
-      head->prev = NULL;
-      tail = head;
-      size++;
-    } else {
-      node* temp = new node;
-      temp->data.x = c.x;
-      temp->data.y = c.y;
-      temp->next = head;
-      temp->prev = NULL;
-      head->prev = temp;
-      head = temp;
-      size++;
-    }
-  }
-
-  // Pop the rearmost block off of the snake's body
-  void pop_back() {
-    tail = tail->prev;
-    tail->next = NULL;
-    size--;
-  }
-
-  // Access the blocks of the snake using the subscript operator
-  coordinate operator [] (int index) {
-    // The first block of the snake is pointed to by the head
-    if (index == 0) {
-      coordinate c = { head->data.x, head->data.y };
-      return c;
-    }
-
-    // Traverse the structure till you get to the right node
-    node* temp = head;
-    int i = 0;
-    while (i != index) {
-      temp = temp->next;
-      i++;
-    }
-
-    coordinate c = { temp->data.x, temp->data.y };
-    return c;
-  }
-};
-
 void display_callback();
 void input_callback(int, int, int);
 void reshape_callback(int, int);
@@ -101,8 +21,7 @@ bool seedflag = false;
 bool food = false;
 bool game_over = false;
 int direction = RIGHT;
-coordinate food_coords;
-Snake snake;
+int foodx, foody;
 int posx[1000] = { 4, 3, 2, 1, 0, -1, -1 };
 int posy[1000] = { 10, 10, 10, 10, 10, 10, 10 };
 int length = 7;
@@ -202,7 +121,7 @@ void drawSnake() {
 
       if (posx[i] == 0 || posx[i] == columns - 1 || posy[i] == 0 || posy[i] == rows - 1) {
         game_over = true;
-      } else if (posx[i] == food_coords.x && posy[i] == food_coords.y) {
+      } else if (posx[i] == foodx && posy[i] == foody) {
         food = false;
         length_inc = true;
       }
@@ -229,18 +148,16 @@ void drawSnake() {
 
 void drawFood() {
   if (!food) {
-    //foodx = random(2, columns - 2);
-    //foody = random(2, rows - 2);
-    food_coords.x = random(2, columns - 2);
-    food_coords.y = random(2, rows - 2);
+    foodx = random(2, columns - 2);
+    foody = random(2, rows - 2);
     food = true;
   }
 
   glBegin(GL_QUADS);
-  glVertex2d(food_coords.x, food_coords.y);
-  glVertex2d(food_coords.x + 1, food_coords.y);
-  glVertex2d(food_coords.x + 1, food_coords.y + 1);
-  glVertex2d(food_coords.x, food_coords.y + 1);
+  glVertex2d(foodx, foody);
+  glVertex2d(foodx + 1, foody);
+  glVertex2d(foodx + 1, foody + 1);
+  glVertex2d(foodx, foody + 1);
   glEnd();
 }
 
