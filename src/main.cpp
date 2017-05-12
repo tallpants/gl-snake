@@ -172,9 +172,13 @@ void drawSnake()
   }
 }
 
+
+// Closes the program if the game is over.
+// Else draws the food and moves the snake
 void display_callback()
 {
 
+  // Quit if the game is over.
   if (game_over)
   {
     exit(0);
@@ -183,9 +187,14 @@ void display_callback()
   glClear(GL_COLOR_BUFFER_BIT);
   glLoadIdentity();
 
+  // Generate coordinates for food if required and draw the food
   drawFood();
+
+  // Move the snake, calculate if it hits the wall or hits itself
+  // or if the snake ate food and grew, then draw the snake
   drawSnake();
 
+  // Swap buffers after drawing (double buffering)
   glutSwapBuffers();
 }
 
