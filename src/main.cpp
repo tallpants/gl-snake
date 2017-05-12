@@ -189,30 +189,39 @@ void display_callback()
   glutSwapBuffers();
 }
 
+// Changes direction of the snake (if allowed) on keyboard input
 void input_callback(int key, int x, int y)
 {
 
   switch (key)
   {
-  case GLUT_KEY_UP:
-    if (direction != DOWN)
-      direction = UP;
-    break;
+    // Up arrow key was pressed
+    case GLUT_KEY_UP:
+      // You can't change direction to UP if you were moving DOWN
+      if (direction != DOWN)
+        direction = UP;
+      break;
 
-  case GLUT_KEY_DOWN:
-    if (direction != UP)
-      direction = DOWN;
-    break;
+    // Down arrow key was pressed
+    case GLUT_KEY_DOWN:
+      // You can't change direction to DOWN if you were moving UP
+      if (direction != UP)
+        direction = DOWN;
+      break;
 
-  case GLUT_KEY_RIGHT:
-    if (direction != LEFT)
-      direction = RIGHT;
-    break;
+    // Right arrow key was pressed
+    case GLUT_KEY_RIGHT:
+      // You can't change direction to RIGHT if you were moving LEFT
+      if (direction != LEFT)
+        direction = RIGHT;
+      break;
 
-  case GLUT_KEY_LEFT:
-    if (direction != RIGHT)
-      direction = LEFT;
-    break;
+    // Left arrow key was pressed
+    case GLUT_KEY_LEFT:
+      // You can't change direction to LEFT if you were moving RIGHT
+      if (direction != RIGHT)
+        direction = LEFT;
+      break;
   }
 }
 
