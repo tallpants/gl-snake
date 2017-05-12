@@ -176,6 +176,7 @@ void drawSnake()
     // Draw the snake in black
     glColor3f(0.0, 0.0, 0.0);
 
+    // Draw ecah block of the snake
     glBegin(GL_QUADS);
       glVertex2d(posx[i], posy[i]);
       glVertex2d(posx[i] + 1, posy[i]);
