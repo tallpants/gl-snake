@@ -99,17 +99,23 @@ void drawFood()
 }
 
 
+// Calculate new position after movement, check if the snake is hitting itself or hitting the
+// wall, check if the snake is eating food and growing, set the new length
+// and draw the body of the snake.
 void drawSnake()
 {
 
+  // New position of each block will be the old position
+  // of the previous block (all blocks in the snake will follow
+  // the same path made by the first block.)
   for (int i = length - 1; i > 0; i--)
   {
     posx[i] = posx[i - 1];
     posy[i] = posy[i - 1];
   }
 
-  glColor3f(0.0, 0.0, 0.0);
-
+  // Calculate the new position of the head block of the snake
+  // depending on the current movement direction
   for (int i = 0; i < length; i++)
   {
 
@@ -117,45 +123,58 @@ void drawSnake()
     {
       switch (direction)
       {
-      case UP:
-        posy[i]++;
-        break;
+        // If direction is UP, Y coordinate of the block increments.
+        case UP:
+          posy[i]++;
+          break;
+        
+        // If direction is DOWN, Y coordinate of the block decrements.
+        case DOWN:
+          posy[i]--;
+          break;
 
-      case DOWN:
-        posy[i]--;
-        break;
+        // If direction is RIGHT, X coordinate of the block increments
+        case RIGHT:
+          posx[i]++;
+          break;
 
-      case RIGHT:
-        posx[i]++;
-        break;
-
-      case LEFT:
-        posx[i]--;
-        break;
+        // If direction is DOWN, X coordinate of the block decrements.
+        case LEFT:
+          posx[i]--;
+          break;
       }
 
+      // Is the snake hitting the the left or right wall?
       if (posx[i] == 0 || posx[i] == columns - 1)
       {
         game_over = true;
       }
 
+      // Is the snake hitting the top or bottom wall?
       if (posy[i] == 0 || posy[i] == rows - 1)
       {
         game_over = true;
       }
 
+      // Is the snake eating the food?
       else if (posx[i] == foodx && posy[i] == foody)
       {
         food = false;
+
+        // Snake's length will get incremented this turn.
         length_inc = true;
       }
 
+      // Is the snake eating itself? 
       for (int j = 1; j < length; j++)
       {
         if (posx[j] == posx[0] && posy[j] == posy[0])
           game_over = true;
       }
     }
+
+    // Draw the snake in black
+    glColor3f(0.0, 0.0, 0.0);
 
     glBegin(GL_QUADS);
       glVertex2d(posx[i], posy[i]);
@@ -165,6 +184,7 @@ void drawSnake()
     glEnd();
   }
 
+  // Snake getting incremented
   if (length_inc)
   {
     length++;
