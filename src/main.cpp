@@ -86,16 +86,18 @@ void drawFood()
     }
   }
 
-  // Draw the food in red
+  // Red colored food
   glColor3f(1, 0, 0);
 
+  // Draw the food square
   glBegin(GL_QUADS);
-  glVertex2d(foodx, foody);
-  glVertex2d(foodx + 1, foody);
-  glVertex2d(foodx + 1, foody + 1);
-  glVertex2d(foodx, foody + 1);
+    glVertex2d(foodx, foody);
+    glVertex2d(foodx + 1, foody);
+    glVertex2d(foodx + 1, foody + 1);
+    glVertex2d(foodx, foody + 1);
   glEnd();
 }
+
 
 void drawSnake()
 {
@@ -214,15 +216,18 @@ void input_callback(int key, int x, int y)
   }
 }
 
+// Redisplay the window every 100ms
 void timer_callback(int)
 {
+  // Mark the current window as needing to be redisplayed
   glutPostRedisplay();
+
+  // Repeat every 100ms
   glutTimerFunc(100, timer_callback, 0);
 }
 
 int main(int argc, char **argv)
 {
-
   // Initialize the window and the display mode (double buffering)
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
@@ -252,7 +257,7 @@ int main(int argc, char **argv)
   // The main game loop will trigger every 100ms
   glutTimerFunc(100, timer_callback, 0);
 
-  // Background color
+  // White background
   glClearColor(1, 1, 1, 1);
 
   glutMainLoop();
