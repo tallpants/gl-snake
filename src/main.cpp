@@ -278,6 +278,7 @@ int main(int argc, char **argv)
   // White background
   glClearColor(1, 1, 1, 1);
 
+  // Start the main loop
   glutMainLoop();
   return 0;
 }
