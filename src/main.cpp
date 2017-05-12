@@ -158,10 +158,10 @@ void drawSnake()
     }
 
     glBegin(GL_QUADS);
-    glVertex2d(posx[i], posy[i]);
-    glVertex2d(posx[i] + 1, posy[i]);
-    glVertex2d(posx[i] + 1, posy[i] + 1);
-    glVertex2d(posx[i], posy[i] + 1);
+      glVertex2d(posx[i], posy[i]);
+      glVertex2d(posx[i] + 1, posy[i]);
+      glVertex2d(posx[i] + 1, posy[i] + 1);
+      glVertex2d(posx[i], posy[i] + 1);
     glEnd();
   }
 
@@ -184,8 +184,8 @@ void display_callback()
     exit(0);
   }
 
+  // Clearing color buffer for drawFood() and drawSnake()
   glClear(GL_COLOR_BUFFER_BIT);
-  glLoadIdentity();
 
   // Generate coordinates for food if required and draw the food
   drawFood();
