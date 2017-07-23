@@ -91,13 +91,12 @@ void drawFood()
 
   // Draw the food square
   glBegin(GL_QUADS);
-    glVertex2d(foodx, foody);
-    glVertex2d(foodx + 1, foody);
-    glVertex2d(foodx + 1, foody + 1);
-    glVertex2d(foodx, foody + 1);
+  glVertex2d(foodx, foody);
+  glVertex2d(foodx + 1, foody);
+  glVertex2d(foodx + 1, foody + 1);
+  glVertex2d(foodx, foody + 1);
   glEnd();
 }
-
 
 // Calculate new position after movement, check if the snake is hitting itself or hitting the
 // wall, check if the snake is eating food and growing, set the new length
@@ -123,25 +122,25 @@ void drawSnake()
     {
       switch (direction)
       {
-        // If direction is UP, Y coordinate of the block increments.
-        case UP:
-          posy[i]++;
-          break;
-        
-        // If direction is DOWN, Y coordinate of the block decrements.
-        case DOWN:
-          posy[i]--;
-          break;
+      // If direction is UP, Y coordinate of the block increments.
+      case UP:
+        posy[i]++;
+        break;
 
-        // If direction is RIGHT, X coordinate of the block increments
-        case RIGHT:
-          posx[i]++;
-          break;
+      // If direction is DOWN, Y coordinate of the block decrements.
+      case DOWN:
+        posy[i]--;
+        break;
 
-        // If direction is DOWN, X coordinate of the block decrements.
-        case LEFT:
-          posx[i]--;
-          break;
+      // If direction is RIGHT, X coordinate of the block increments
+      case RIGHT:
+        posx[i]++;
+        break;
+
+      // If direction is DOWN, X coordinate of the block decrements.
+      case LEFT:
+        posx[i]--;
+        break;
       }
 
       // Is the snake hitting the the left or right wall?
@@ -165,7 +164,7 @@ void drawSnake()
         length_inc = true;
       }
 
-      // Is the snake eating itself? 
+      // Is the snake eating itself?
       for (int j = 1; j < length; j++)
       {
         if (posx[j] == posx[0] && posy[j] == posy[0])
@@ -178,10 +177,10 @@ void drawSnake()
 
     // Draw ecah block of the snake
     glBegin(GL_QUADS);
-      glVertex2d(posx[i], posy[i]);
-      glVertex2d(posx[i] + 1, posy[i]);
-      glVertex2d(posx[i] + 1, posy[i] + 1);
-      glVertex2d(posx[i], posy[i] + 1);
+    glVertex2d(posx[i], posy[i]);
+    glVertex2d(posx[i] + 1, posy[i]);
+    glVertex2d(posx[i] + 1, posy[i] + 1);
+    glVertex2d(posx[i], posy[i] + 1);
     glEnd();
   }
 
@@ -192,7 +191,6 @@ void drawSnake()
     length_inc = false;
   }
 }
-
 
 // Closes the program if the game is over.
 // Else draws the food and moves the snake
@@ -225,33 +223,33 @@ void input_callback(int key, int x, int y)
 
   switch (key)
   {
-    // Up arrow key was pressed
-    case GLUT_KEY_UP:
-      // You can't change direction to UP if you were moving DOWN
-      if (direction != DOWN)
-        direction = UP;
-      break;
+  // Up arrow key was pressed
+  case GLUT_KEY_UP:
+    // You can't change direction to UP if you were moving DOWN
+    if (direction != DOWN)
+      direction = UP;
+    break;
 
-    // Down arrow key was pressed
-    case GLUT_KEY_DOWN:
-      // You can't change direction to DOWN if you were moving UP
-      if (direction != UP)
-        direction = DOWN;
-      break;
+  // Down arrow key was pressed
+  case GLUT_KEY_DOWN:
+    // You can't change direction to DOWN if you were moving UP
+    if (direction != UP)
+      direction = DOWN;
+    break;
 
-    // Right arrow key was pressed
-    case GLUT_KEY_RIGHT:
-      // You can't change direction to RIGHT if you were moving LEFT
-      if (direction != LEFT)
-        direction = RIGHT;
-      break;
+  // Right arrow key was pressed
+  case GLUT_KEY_RIGHT:
+    // You can't change direction to RIGHT if you were moving LEFT
+    if (direction != LEFT)
+      direction = RIGHT;
+    break;
 
-    // Left arrow key was pressed
-    case GLUT_KEY_LEFT:
-      // You can't change direction to LEFT if you were moving RIGHT
-      if (direction != RIGHT)
-        direction = LEFT;
-      break;
+  // Left arrow key was pressed
+  case GLUT_KEY_LEFT:
+    // You can't change direction to LEFT if you were moving RIGHT
+    if (direction != RIGHT)
+      direction = LEFT;
+    break;
   }
 }
 
