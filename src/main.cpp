@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <gl/glut.h>
+#include <GL/glut.h>
 
 // Movement direction macros
 #define UP 1
